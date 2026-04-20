@@ -30,3 +30,18 @@ class ArCondicionadoModerno implements Climatizador {
     public void processarAr() { System.out.println("AC: Resfriando o ambiente."); }
     public void desligar() { System.out.println("AC: Desligado."); }
 }
+
+// 2. ADAPTER: Ar-Condicionado de Janela Antigo
+
+class ArDeJanelaAntigo {
+    public void acionarCompressor() { System.out.println("AC Antigo: BRRRRR (Compressor ligado)."); }
+    public void cortarEnergia() { System.out.println("AC Antigo: Desligado na tomada."); }
+}
+
+class AdapterACAntigo implements Climatizador {
+    private ArDeJanelaAntigo acLegado;
+
+    public AdapterACAntigo(ArDeJanelaAntigo ac) { this.acLegado = ac; }
+    public void processarAr() { acLegado.acionarCompressor(); }
+    public void desligar() { acLegado.cortarEnergia(); }
+}
