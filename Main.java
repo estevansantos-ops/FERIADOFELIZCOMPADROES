@@ -18,3 +18,15 @@ class TermostatoCentral {
     
     public int getTemperaturaIdeal() { return temperaturaIdeal; }
 }
+
+// INTERFACE
+
+interface Climatizador {
+    void processarAr();
+    void desligar();
+}
+
+class ArCondicionadoModerno implements Climatizador {
+    public void processarAr() { System.out.println("AC: Resfriando o ambiente."); }
+    public void desligar() { System.out.println("AC: Desligado."); }
+}
