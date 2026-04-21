@@ -94,3 +94,20 @@ class ClimatizadorFactory {
         return null;
     }
 }
+
+// 5. DECORATOR: Tratamento do Ar
+
+abstract class TratamentoArDecorator implements Climatizador {
+    protected Climatizador wrapper;
+    public TratamentoArDecorator(Climatizador wrapper) { this.wrapper = wrapper; }
+    public void processarAr() { wrapper.processarAr(); }
+    public void desligar() { wrapper.desligar(); }
+}
+
+class FiltroAntiAlergicoDecorator extends TratamentoArDecorator {
+    public FiltroAntiAlergicoDecorator(Climatizador wrapper) { super(wrapper); }
+    public void processarAr() {
+        super.processarAr();
+        System.out.println("+ [Filtro HEPA] Removendo poeira e ácaros do ar.");
+    }
+}
