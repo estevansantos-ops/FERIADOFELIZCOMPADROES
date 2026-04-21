@@ -111,3 +111,29 @@ class FiltroAntiAlergicoDecorator extends TratamentoArDecorator {
         System.out.println("+ [Filtro HEPA] Removendo poeira e ácaros do ar.");
     }
 }
+
+// 6. FACADE: Painel Simples do Celular
+
+class AplicativoClimatizacaoFacade {
+    private Climatizador arDoQuarto;
+
+    public AplicativoClimatizacaoFacade() {
+        // Factory cria o ar antigo, passa pelo adapter, protege com o proxy
+        Climatizador baseAC = ClimatizadorFactory.criar("ANTIGO_PROTEGIDO");
+        
+        // Decorator adiciona o filtro anti-alérgico
+        this.arDoQuarto = new FiltroAntiAlergicoDecorator(baseAC);
+    }
+
+    public void ativarModoDormir() {
+        System.out.println("\n--- Ativando Modo Dormir ---");
+        int temp = TermostatoCentral.getInstance().getTemperaturaIdeal();
+        System.out.println("Buscando temperatura ideal do termostato: " + temp + "°C");
+        arDoQuarto.processarAr();
+    }
+    
+    public void desativarSistema() {
+        System.out.println("\n--- Desativando Sistema ---");
+        arDoQuarto.desligar();
+    }
+}
