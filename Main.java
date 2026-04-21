@@ -78,3 +78,19 @@ class ProxyEconomiaEnergia implements Climatizador {
         acReal.desligar();
     }
 }
+
+// 4. FACTORY: Criação de Climatizadores
+
+class ClimatizadorFactory {
+    public static Climatizador criar(String tipo) {
+        if (tipo.equals("MODERNO")) {
+            return new ArCondicionadoModerno();
+        }
+        if (tipo.equals("ANTIGO_PROTEGIDO")) {
+            ArDeJanelaAntigo antigo = new ArDeJanelaAntigo();
+            AdapterACAntigo adapter = new AdapterACAntigo(antigo);
+            return new ProxyEconomiaEnergia(adapter, true); // true = simulando janela fechada
+        }
+        return null;
+    }
+}
