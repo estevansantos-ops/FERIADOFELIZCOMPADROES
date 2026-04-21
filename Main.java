@@ -137,3 +137,14 @@ class AplicativoClimatizacaoFacade {
         arDoQuarto.desligar();
     }
 }
+
+// CLIENTE (Main)
+
+public class Main {
+    public static void main(String[] args) {
+        AplicativoClimatizacaoFacade app = new AplicativoClimatizacaoFacade();
+        
+        app.ativarModoDormir();
+        app.desativarSistema();
+    }
+}
