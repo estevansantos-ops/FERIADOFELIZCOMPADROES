@@ -45,3 +45,36 @@ class AdapterACAntigo implements Climatizador {
     public void processarAr() { acLegado.acionarCompressor(); }
     public void desligar() { acLegado.cortarEnergia(); }
 }
+
+// 3. PROXY: Controle de Janela/Energia + Logs
+
+class ProxyEconomiaEnergia implements Climatizador {
+    private Climatizador acReal;
+    private boolean janelaFechada;
+
+    public ProxyEconomiaEnergia(Climatizador ac, boolean janelaFechada) {
+        this.acReal = ac;
+        this.janelaFechada = janelaFechada;
+    }
+
+    private void registrarLog(String comando, String resultado) {
+        String dataHora = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+        System.out.println("[LOG | " + dataHora + "] Comando: " + comando + " | Status: " + resultado);
+    }
+
+    public void processarAr() {
+        if (janelaFechada) {
+            registrarLog("Ligar AC", "PERMITIDO - Requisitos de energia atendidos.");
+            System.out.println("[Proxy] Liberando energia elétrica para o AC...");
+            acReal.processarAr();
+        } else {
+            registrarLog("Ligar AC", "BLOQUEADO - Desperdício de energia (Janela aberta).");
+            System.out.println("[Proxy] ERRO: Comando ignorado. Feche a janela para economizar energia!");
+        }
+    }
+
+    public void desligar() {
+        registrarLog("Desligar AC", "EXECUTADO");
+        acReal.desligar();
+    }
+}
